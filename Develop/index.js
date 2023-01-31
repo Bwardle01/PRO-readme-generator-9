@@ -4,13 +4,13 @@ const fs = require('fs');
 const util = require('util');
 
 // questions 
-const generateReadme = require('./utils/generateMarkdown')
-const writeFileAsync = util.promisify(fs.writeFile);
+// const generateReadme = require('./utils/generateMarkdown')
+// const writeFileAsync = util.promisify(fs.writeFile);
 // const api = require(api) This is for the badge and license api
 
 // TODO: Create an array of questions for user input
-function questions() {
-    inquirer.prompt([
+const questions =
+    ([
     {
       type: 'input',
       message: 'What do you want your Readme title to be?',
@@ -61,22 +61,61 @@ function questions() {
       name: 'email',
     },
   ]);
+
+
+function generateReadme(response) {
+  const licenseInfo = response.license.split("");
+  return`
+  ![license linsenceInfo](${licenseInfo[1]})
+  #${response.title}
+
+  ## Table of Contents
+  [Installation](#installation)
+  [Usage](#Usage)
+  [License](#license)
+  [Contributing](#Contribruting)
+  [Test](#Tests)
+  [Questions](#Questions)
+
+  ## Description
+  ${response.Description}
+  
+  ## Installation
+  ${response.Installation}
+  
+  ## Usage
+  ${response.Usage}
+  
+  ## License
+  ${response.License}
+  
+  ## Contributors
+  ${response.Contributors}
+
+  ##tests
+  ${response.Tests}
+
+  ##Questions
+  *Please contact me there these options if you have any further questions.
+  ${response.email}
+  ${response.username}
+
+`}
+
+function askQuestions() {
+  return inquirer.prompt(questions);
 }
 
-  async function init() {
-    try {
-        // Ask user questions and generate responses
-        const answers = await questions();
-        const generateContent = generateReadme(answers);
-        // Write new README.md to example directory
-        await writeFileAsync('./example/README.md', generateContent);
-        console.log('✔️  Successfully wrote to README.md');
-    }   catch(err) {
-        console.log(err);
-    }
-  }
-  
-  init(); 
+function init() {
+  askQuestions().then((response) =>{
+    fs.writeFile('./example/README.md', generateReadme(response), (err) => err ? console.error(err) : console.log("Readme generated!")
+    )
+  })
+}
+
+init(); 
+
+
 
  // TODO: Create a function to write README file
 // TODO: Create a function to initialize app
@@ -87,3 +126,15 @@ function questions() {
 // require for other js file
 // Function call to initialize app
 
+// async function init() {
+//   try {
+//       // Ask user questions and generate responses
+//       const answers = await questions();
+//       const generateContent = generateReadme(answers);
+//       // Write new README.md to example directory
+//       await writeFileAsync('./example/README.md', generateContent);
+//       console.log('✔️  Successfully wrote to README.md');
+//   }   catch(err) {
+//       console.log(err);
+//   }
+// }
