@@ -1,19 +1,21 @@
 // TODO: Include packages needed for this application
-const fs = require('fs');
 const inquirer = require('inquirer');
+const fs = require('fs');
+const util = require('util');
 
 // questions 
-
+const generateReadme = require('./utils/generateMarkdown')
+const writeFileAsync = util.promisify(fs.writeFile);
+// const api = require(api) This is for the badge and license api
 
 // TODO: Create an array of questions for user input
-const questions = [
-    inquirer
-    .prompt([
+function questions() {
+    inquirer.prompt([
     {
       type: 'input',
       message: 'What do you want your Readme title to be?',
       name: 'Title',
-      default:'This is the title of my Readme.'
+      default:'This is the title of my Readme.',
     },
     {
       type: 'input',
@@ -51,26 +53,37 @@ const questions = [
     {
       type: 'input',
       message: 'What is your GitHub username?.',
-      name: 'Questions',
+      name: 'username',
     },
-    // please reach out to my email with any additional questions 
     {
       type: 'input',
       message: 'What is your email?',
-      name: 'Questions2',
+      name: 'email',
     },
-
-  ])
-  // TODO: Create a function to write README file
-  .then((data) => {
-      const filename = 'Readme.md';
-    fs.writeFile(filename, JSON.stringify(data, null,), (err) => err ? console.log("there was an error",err) : console.log("success"))})
-];
-
-// TODO: Create a function to initialize app
-function init() {
-  
+  ]);
 }
 
+  async function init() {
+    try {
+        // Ask user questions and generate responses
+        const answers = await questions();
+        const generateContent = generateReadme(answers);
+        // Write new README.md to example directory
+        await writeFileAsync('./example/README.md', generateContent);
+        console.log('✔️  Successfully wrote to README.md');
+    }   catch(err) {
+        console.log(err);
+    }
+  }
+  
+  init(); 
+
+ // TODO: Create a function to write README file
+// TODO: Create a function to initialize app
+
+// function that starts everthing.
+// first function to call all other functions
+// run prompt
+// require for other js file
 // Function call to initialize app
-init();
+
