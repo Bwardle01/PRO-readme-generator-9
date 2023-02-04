@@ -1,12 +1,8 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
-const util = require('util');
 
-// questions 
-// const generateReadme = require('./utils/generateMarkdown')
-// const writeFileAsync = util.promisify(fs.writeFile);
-// const api = require(api) This is for the badge and license api
+
 
 // TODO: Create an array of questions for user input
 const questions =
@@ -42,12 +38,11 @@ const questions =
       message: 'Please add your Test Instructions.',
       name: 'Tests',
     },
-    // come back to add the choice of licenses
     {
       type: 'list',
       message: 'Please choose what license you would like to use.',
       name: 'License',
-      choices: ["1", "2","3"],
+      choices:  ['MIT', 'GPLv3', 'GPL'],
       default:["0"],
     },
     {
@@ -64,48 +59,53 @@ const questions =
 
 
 function generateReadme(response) {
-  const licenseInfo = response.license.split("");
   return`
-  ![license linsenceInfo](${licenseInfo[1]})
-  #${response.title}
+  ${renderLicenseBadge(response)}
+  
+
+  # ${response.Title}
 
   ## Table of Contents
-  [Installation](#installation)
-  [Usage](#Usage)
-  [License](#license)
-  [Contributing](#Contribruting)
-  [Test](#Tests)
-  [Questions](#Questions)
+  - [Installation](#installation)
+  - [Usage](#Usage)
+  - [License](#license)
+  - [Contributing](#Contribruting)
+  - [Test](#Tests)
+  - [Questions](#Questions)
 
   ## Description
-  ${response.Description}
+  - ${response.Description}
   
   ## Installation
-  ${response.Installation}
+  - ${response.Installation}
   
   ## Usage
-  ${response.Usage}
+  - ${response.Usage}
   
   ## License
-  ${response.License}
+  - ${response.License}
+  
   
   ## Contributors
-  ${response.Contributors}
+  - ${response.Contributors}
 
-  ##tests
-  ${response.Tests}
+  ## Tests
+  - ${response.Tests}
 
-  ##Questions
-  *Please contact me there these options if you have any further questions.
-  ${response.email}
-  ${response.username}
+  ## Questions
+  - Please contact me there these options if you have any further questions.
+  - ${response.email}
+  - ${response.username}
 
 `}
 
+// function to call the prompt
 function askQuestions() {
   return inquirer.prompt(questions);
 }
 
+
+// function to call the response questions to the readme.
 function init() {
   askQuestions().then((response) =>{
     fs.writeFile('./example/README.md', generateReadme(response), (err) => err ? console.error(err) : console.log("Readme generated!")
@@ -113,28 +113,30 @@ function init() {
   })
 }
 
+// function to bring the license response and add a badge depending on what was chosen.
+function renderLicenseBadge(response) {
+  let licenseType = response.License; 
+  let yourLicense = ''
+  if(licenseType === 'MIT') {
+    yourLicense = '![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)'
+  } else if (licenseType === 'GPLv3') {
+    yourLicense = '![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)'
+  } else if (licenseType === 'GPL') {
+    yourLicense = '![GPL license](https://img.shields.io/badge/License-GPL-blue.svg)'
+  } else {
+    yourLicense = "N/A"
+  }
+  return yourLicense;
+};
+
 init(); 
 
 
-
- // TODO: Create a function to write README file
+// TODO: Create a function to write README file
 // TODO: Create a function to initialize app
-
 // function that starts everthing.
 // first function to call all other functions
 // run prompt
 // require for other js file
 // Function call to initialize app
 
-// async function init() {
-//   try {
-//       // Ask user questions and generate responses
-//       const answers = await questions();
-//       const generateContent = generateReadme(answers);
-//       // Write new README.md to example directory
-//       await writeFileAsync('./example/README.md', generateContent);
-//       console.log('✔️  Successfully wrote to README.md');
-//   }   catch(err) {
-//       console.log(err);
-//   }
-// }
