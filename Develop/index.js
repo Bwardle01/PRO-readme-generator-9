@@ -69,7 +69,7 @@ function generateReadme(response) {
   - [Installation](#installation)
   - [Usage](#Usage)
   - [License](#license)
-  - [Contributing](#Contribruting)
+  - [Contributing](#Contributing)
   - [Test](#Tests)
   - [Questions](#Questions)
 
@@ -86,8 +86,8 @@ function generateReadme(response) {
   - ${response.License}
   
   
-  ## Contributors
-  - ${response.Contributors}
+  ## Contributing
+  - ${response.Contributing}
 
   ## Tests
   - ${response.Tests}
@@ -95,7 +95,7 @@ function generateReadme(response) {
   ## Questions
   - Please contact me there these options if you have any further questions.
   - ${response.email}
-  - ${response.username}
+  - GitHub username: ${response.username}
 
 `}
 
