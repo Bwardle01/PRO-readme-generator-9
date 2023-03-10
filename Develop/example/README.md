@@ -1,8 +1,8 @@
 
-  ![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)
+  ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
   
 
-  # Bronsons New README
+  # Employee tracker
 
   ## Table of Contents
   - [Installation](#installation)
@@ -13,26 +13,26 @@
   - [Questions](#Questions)
 
   ## Description
-  - This is a node.js app that uses user input from inquirer to populate a new README.md
+  - This is a Employee tracker that will allow you to show all departments, roles, and employees. You will be able to add a department, role, and  employess. You also will be able to update all catorgies of the tracker. You also can add manager and update manager info.
   
   ## Installation
-  - npm init, npm install inquirer
+  - You will need to run node server.js to start the prompt
   
   ## Usage
-  - Run the following command in the terminal: node.js
+  - You will be able to use this to track any company info.
   
   ## License
-  - GPLv3
+  - MIT
   
   
   ## Contributing
-  - Bronson Wardle
+  - 
 
   ## Tests
-  - N/
+  - N/A
 
   ## Questions
   - Please contact me there these options if you have any further questions.
-  - bronson.wardle@gmail.com
+  - Bronson.wardle@gmail.com
   - GitHub username: Bwardle01
 

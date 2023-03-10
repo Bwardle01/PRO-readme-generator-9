@@ -42,7 +42,7 @@ const questions =
       type: 'list',
       message: 'Please choose what license you would like to use.',
       name: 'License',
-      choices:  ['MIT', 'GPLv3', 'GPL'],
+      choices:  ['MIT', 'GPLv3', 'GPL','n/a'],
       default:["0"],
     },
     {
